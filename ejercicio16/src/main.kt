@@ -5,13 +5,10 @@ fun main(args: Array<String>) {
     println("Resultado: $result")
 }
 
-fun Int.removeFirstLastDigit(): Int{
-    var numfinal = 0
-    if (this > 99) {
-        val numstri = this.toString()
-        numfinal = numstri.removeFirstLastChar().toInt()
-    }
-    return numfinal
-}
+fun Int.removeFirstLastDigit() =
+    if (this > 99)
+        this.toString().removeFirstLastChar().toInt()
+    else
+        this
 
 fun String.removeFirstLastChar() = this.substring(1, this.length - 1)

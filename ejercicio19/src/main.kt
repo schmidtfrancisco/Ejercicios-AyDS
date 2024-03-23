@@ -11,8 +11,8 @@ fun main(){
     val f2 = File("f2.dat")
     val f3 = File("f3.dat")
     val f4 = File("f4.dat")
-    val f5 = File("f5.dat")
-    val f6 = File("f6.dat")
+    val f5 = File("f5.xt")
+    val f6 = File("f6.xt")
 
     RootDirectory.add(d1)
     RootDirectory.add(d2)
@@ -37,10 +37,17 @@ fun main(){
     RootDirectory.ls()
 
     listarArchivos()
+
+    println(buscar("dat"))
 }
 
+// Ejercicio
 fun listarArchivos(){
-    listarArchivosRec(RootDirectory)
+    //listarArchivosRec(RootDirectory)
+    val lista = listOfFiles(RootDirectory)
+    lista.forEach{
+        println(it.name)
+    }
 }
 
 fun listarArchivosRec(d: Directory){
@@ -53,4 +60,22 @@ fun listarArchivosRec(d: Directory){
         }
     }
 }
+
+fun listOfFiles(directory: Directory): List<File> {
+    val files = mutableListOf<File>()
+    directory.getElementos().forEach {
+        when (it) {
+            is File -> files.add(it)
+            is Directory -> files.addAll(listOfFiles(it))
+        }
+    }
+    return files
+}
+
+//Ejercicio 27
+fun buscar(subterm: String): List<String> =
+    listOfFiles(RootDirectory)
+        .filter { it.name.contains(subterm)}
+        .map { it.name }
+
 
